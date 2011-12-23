@@ -219,7 +219,7 @@ public class GedComToXML {
 				currentTag = tagName;
 			}
 			
-			// write the node - but dont close it
+			// write the node - but don't close it
 			if(level > -1) {
 				if(!first) {
 					writer.write("\n");
