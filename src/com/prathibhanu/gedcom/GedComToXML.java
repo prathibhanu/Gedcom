@@ -26,8 +26,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Stack;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 /**
  * 
  * @author prathibhanu
@@ -172,12 +170,12 @@ public class GedComToXML {
 				if(lastValue != null) {
 					if(currentLevel > level) {
 						writer.write(" value=\"");
-						writer.write(StringEscapeUtils.escapeXml(lastValue));
+						writer.write(escapeXML(lastValue));
 						writer.write("\" >");
 					} else {
 						// currentLevel == level
 						writer.write(">");
-						writer.write(StringEscapeUtils.escapeXml(lastValue));
+						writer.write(escapeXML(lastValue));
 					}
 				} else {
 					writer.write(">");
@@ -259,6 +257,26 @@ public class GedComToXML {
 		}
 	}
 
+	/**
+	 * Escape the XML string
+	 */
+	private static String escapeXML(String s) {
+	    StringBuffer str = new StringBuffer();
+	    int len = (s != null) ? s.length() : 0;
+	    for (int i=0; i<len; i++) {
+	       char ch = s.charAt(i);
+	       switch (ch) {
+	       case '<': str.append("&lt;"); break;
+	       case '>': str.append("&gt;"); break;
+	       case '&': str.append("&amp;"); break;
+	       case '"': str.append("&quot;"); break;
+	       case '\'': str.append("&apos;"); break;
+	       default: str.append(ch);
+	     }
+	    }
+	    return str.toString();
+	  }
+	
 	/**
 	 * Output the app usage
 	 */
